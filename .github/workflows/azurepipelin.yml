@@ -1,0 +1,23 @@
+name: Deploy to Azure
+
+on:  
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push Docker image
+      run: |
+        docker build -t kikundiserver .
+        docker tag kikundiserver kikundi.azurecr.io/kikundiserver:latest
+        docker push kikundi.azurecr.io/kikundiserver:latest
+    - name: Deploy to Azure
+      uses: azure/webapps-deploy@v1
+      with:
+        app-name: kikundiserver
+        package: '.'
