@@ -5,6 +5,7 @@ import com.mingati.kikundi.response.ApiResponse;
 import com.mingati.kikundi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +26,11 @@ public class UserController {
                         .hasError(false)
                         .successMessage("created successfully with id %d ")
                         .build()).get();
+    }
+    @GetMapping("/greetings")
+    public ResponseEntity<String> greetings(){
+
+        return ResponseEntity.ok().body("hi there welcome to kikundi");
     }
 
 }
