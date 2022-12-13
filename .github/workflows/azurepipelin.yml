@@ -46,12 +46,12 @@ jobs:
 #    - name: Building a composed image
 #      run: docker-compose up -d
     - name: Build and push container image to registry
-      run: docker-compose up -d
+#      run: docker-compose up -d
       uses: docker/build-push-action@v2
       with:
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_bf3e13c2f50e437daa5d7da6f9bf2e30 }}/kikundi_backend:${{ github.sha }}
-#        file: ./Dockerfile
+        file: ./Dockerfile
 
 
   deploy:
