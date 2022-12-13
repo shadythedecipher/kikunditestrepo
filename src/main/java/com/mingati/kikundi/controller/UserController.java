@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("/greetings")
     public ResponseEntity<String> greetings(){
 
-        return ResponseEntity.ok().body("hi there welcome to kikundi");
+        return ResponseEntity.ok().body("hi there welcome to kikundi api");
     }
 
 }
