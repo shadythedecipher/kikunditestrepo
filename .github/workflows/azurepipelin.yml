@@ -47,8 +47,3 @@ jobs:
         context: ./
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/kikundi_backend:latest
-    - name: Deploy to Azure
-      uses: azure/webapps-deploy@v1
-      with:
-        app-name: kikundiserver
-        package: '.'
