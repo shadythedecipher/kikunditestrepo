@@ -1,53 +1,15 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - kikundispringboot
+name: Deploy to Azure
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:
+env:
+  # basic
+  resourceGroup: kikundi_backend_container
+  location: eastus
 
-#jobs:
-#  build:
-#    runs-on: 'ubuntu-latest'
-#
-#    steps:
-#    - uses: actions/checkout@v2
-#
-#    - name: Set up Docker Buildx
-#      uses: docker/setup-buildx-action@v1
-#
-#    - name: Log in to registry
-#      uses: docker/login-action@v1
-#      with:
-#        registry: https://kikundicontainerregistry.azurecr.io/
-#        username: ${{ secrets.AzureAppService_ContainerUsername_822dea9150cc412095e9b8e207b5ac38 }}
-#        password: ${{ secrets.AzureAppService_ContainerPassword_f0f397f055db4ebf8b88f47dc00ba0c0 }}
-#
-#    - name: Build and push container image to registry
-#      uses: docker/build-push-action@v2
-#      with:
-#        push: true
-#        tags: kikundicontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_822dea9150cc412095e9b8e207b5ac38 }}/kikundi:${{ github.sha }}
-#        file: ./Dockerfile
-#
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: build
-#    environment:
-#      name: 'production'
-#      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-#
-#    steps:
-#    - name: Deploy to Azure Web App
-#      id: deploy-to-webapp
-#      uses: azure/webapps-deploy@v2
-#      with:
-#        app-name: 'kikundispringboot'
-#        slot-name: 'production'
-#        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4c481a51e4c24800a2443ea717210b31 }}
+  acrName: kikundi.azurecr
 
 jobs:
   build:
@@ -85,10 +47,18 @@ jobs:
       #      run: docker-compose up -d
       - name: Build and push container image to registry
         run: docker-compose up -d
+
+      - name: Pushing the image
         uses: docker/build-push-action@v2
         with:
+          context: ./
           push: true
-          tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_bf3e13c2f50e437daa5d7da6f9bf2e30 }}/kikundi_backend:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kikundi_backend:latest
+
+  #      uses: docker/build-push-action@v2
+  #      with:
+  #        push: true
+  #        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_bf3e13c2f50e437daa5d7da6f9bf2e30 }}/kikundi_backend:${{ github.sha }}
   #        file: ./Dockerfile
 
 
@@ -107,3 +77,5 @@ jobs:
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_bd22e62104514c0087fc0ae2557e1178 }}
           images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_bf3e13c2f50e437daa5d7da6f9bf2e30 }}/kikundi_backend:${{ github.sha }}'
+
+
