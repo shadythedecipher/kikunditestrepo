@@ -22,9 +22,9 @@ jobs:
     - name: Log in to registry
       uses: Azure/docker-login@v1
       with:
-        login-server: kikundicontainerregistry.azurecr.io
         username: ${{ secrets.AzureUser }}
         password: ${{ secrets.AzurePass }}
+        login-server: kikundicontainerregistry.azurecr.io
         run: |
           docker build . -t kikundicontainerregistry.azurecr.io/test:${{ github.sha }}
           docker push kikundicontainerregistry.azurecr.io/test:${{ github.sha }}
