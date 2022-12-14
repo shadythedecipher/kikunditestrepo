@@ -21,6 +21,7 @@ jobs:
 
     - name: Log in to registry
       uses: azure/docker-login@v1
+
       with:
         username: ${{ secrets.AzureUser }}
         password: ${{ secrets.AzurePass }}
@@ -34,6 +35,8 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.ACR_CREDENTIAL }}
+      env: # Or as an environment variable
+        credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: 'Build and push image'
       uses: azure/docker-login@v1
