@@ -30,14 +30,20 @@ jobs:
           docker build . -t kikundicontainerregistry.azurecr.io/test:${{ github.sha }}
           docker push kikundicontainerregistry.azurecr.io/test:${{ github.sha }}
 
-
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
+#
+#    - name: 'Login via Azure CLI'
+#      uses: azure/login@v1
+#      with:
+#        creds: ${{ secrets.ACR_CREDENTIAL }}
+#      env: # Or as an environment variable
+#        credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Azure CLI script
+      uses: azure/CLI@v1
       with:
-        creds: ${{ secrets.ACR_CREDENTIAL }}
-      env: # Or as an environment variable
-        credentials: ${{ secrets.AZURE_CREDENTIALS }}
-
+        inlineScript: |
+          az login
+          az cache purge
+          az account clear
     - name: 'Build and push image'
       uses: azure/docker-login@v1
       with:
