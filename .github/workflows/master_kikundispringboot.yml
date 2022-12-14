@@ -25,6 +25,9 @@ jobs:
         login-server: kikundicontainerregistry.azurecr.io
         username: ${{ secrets.AzureUser }}
         password: ${{ secrets.AzurePass }}
+        run: |
+          docker build . -t kikundicontainerregistry.azurecr.io/test:${{ github.sha }}
+          docker push kikundicontainerregistry.azurecr.io/test:${{ github.sha }}
 #
 #    - name: Build and push container image to registry
 #      uses: docker/build-push-action@v2
