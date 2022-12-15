@@ -22,7 +22,7 @@ jobs:
           java-version: 11
           distribution: 'adopt'
           cache: gradle
-      - name: Build with Gradle
+      - name: Build with Gradle yes
         run: ./gradlew build --scan
 
       - name: Set up QEMU
