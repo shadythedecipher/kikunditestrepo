@@ -37,6 +37,10 @@ jobs:
       #      with:
       #        username: ${{ secrets.DOCKERHUB_USERNAME }}
       #        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: installing the azure cli
+      - uses: elstudio/action-install-azure-cli@v1
+
+      - name: performing the login function
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
